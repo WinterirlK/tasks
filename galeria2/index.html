@@ -125,8 +125,8 @@
 
             function Powieksz_zdj() {
                 var Powiekszony = $('<div class="powiekszone-zdj"></div>');
-                Powiekszony.append('<span class="przycisk-zamknij">&times;</span>');
-                Powiekszony.append('<img src="' + images.eq(index).attr('src') + '">');
+                Powiekszony.append('<span class="przycisk-zamknij">x</span>'); //przycisk krzyzyka
+                Powiekszony.append('<img src="' + images.eq(index).attr('src') + '">');  // element img
                 Powiekszony.appendTo('body');
 
                 Powiekszony.animate({
@@ -143,8 +143,8 @@
 
 
 
-                Powiekszony.append('<span class="strzalka left">&lt;</span>');
-                Powiekszony.append('<span class="strzalka right">&gt;</span>');
+                Powiekszony.append('<span class="strzalka left"><</span>'); //strzalka w lewo
+                Powiekszony.append('<span class="strzalka right">></span>'); // strzalka w prawo
 
                 $('.strzalka.left').click(function () {
                     index--;
