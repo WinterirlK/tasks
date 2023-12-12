@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+        }
+
+        header {
+            background-color: #272727;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        main img {
+            width: 30%;
+            margin: 10px;
+            border: 3px solid #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        footer {
+            background-color: #272727;
+            color: #fff;
+            height: 50px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .enlarged-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #333;
+            opacity: 0;
+        }
+
+        .enlarged-image img {
+            max-width: 80%;
+            max-height: 80%;
+            border: 2px solid #fff;
+            border-radius: 5px;
+        }
+
+        .przycisk-zamknij,
+        .strzalka {
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+        }
+
+        .przycisk-zamknij {
+            right: 30px;
+        }
+
+        .strzalka.left {
+            left: 20px;
+            top: 50%;
+        }
+
+        .strzalka.right {
+            right: 20px;
+            top: 50%;
+        }
+    </style>
+    <title>Responsywna Galeria</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>GALERIA</h1>
+    </header>
+
+    <main>
+        <img src="./img/img1.png" alt="Zdjęcie 1">
+        <img src="./img/img2.png" alt="Zdjęcie 2">
+        <img src="./img/img3.jpg" alt="Zdjęcie 3">
+        <img src="./img/img4.jpg" alt="Zdjęcie 4">
+        <img src="./img/img5.jpg" alt="Zdjęcie 5">
+        <img src="./img/img6.jpg" alt="Zdjęcie 6">
+        <img src="./img/img7.jpg" alt="Zdjęcie 7">
+        <img src="./img/img8.jpg" alt="Zdjęcie 8">
+        <img src="./img/img9.jpg" alt="Zdjęcie 9">
+        <img src="./img/img10.jpg" alt="Zdjęcie 10">
+        <img src="./img/img11.jpg" alt="Zdjęcie 11">
+        <img src="./img/img12.jpg" alt="Zdjęcie 12">
+    </main>
+
+    <footer></footer>
+
+    <script>
+        $(document).ready(function () {
+            var images = $('main img');
+            var index = 0;
+
+            images.click(function () {
+                index = images.index(this);
+                showEnlargedImage();
+            });
+
+            function showEnlargedImage() {
+                var Powiekszony = $('<div class="enlarged-image"></div>');
+                Powiekszony.append('<span class="przycisk-zamknij">&times;</span>');
+                Powiekszony.append('<img src="' + images.eq(index).attr('src') + '">');
+                Powiekszony.appendTo('body');
+
+                Powiekszony.animate({
+                    opacity: 1
+                }, 500);
+
+                $('.przycisk-zamknij').click(function () {
+                    Powiekszony.animate({
+                        opacity: 0
+                    }, 500, function () {
+                        Powiekszony.remove();
+                    });
+                });
+
+                Powiekszony.click(function (event) {
+                    if (event.target == $('.arrow')) {
+                        index = (index + 1) % images.length;
+                        $('img', Powiekszony).attr('src', images.eq(index).attr('src'));
+                    }
+                });
+
+                Powiekszony.append('<span class="strzalka left">&lt;</span>');
+                Powiekszony.append('<span class="strzalka right">&gt;</span>');
+
+                $('.strzalka.left').click(function () {
+                    index = (index - 1 + images.length) % images.length;
+                    $('img', Powiekszony).attr('src', images.eq(index).attr('src'));
+                });
+
+                $('.strzalka.right').click(function () {
+                    index = (index + 1) % images.length;
+                    $('img', Powiekszony).attr('src', images.eq(index).attr('src'));
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
